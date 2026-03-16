@@ -8,9 +8,32 @@ import { Volume2, VolumeX, X } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
+  const [showContent, setShowContent] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [zoomedImg, setZoomedImg] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Fallback: forcefully show content after 3s in case mobile autoPlay is entirely blocked
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => setShowContent(true), 3000);
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
+  // Trigger the text reveal slightly before the very end of the video
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      // The video is roughly 6 seconds long. Trigger the smash at 0.5s before the end.
+      if (video.duration && video.currentTime >= video.duration - 0.5) {
+        if (!showContent) setShowContent(true);
+      }
+    };
+    
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+  }, [showContent]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -31,7 +54,7 @@ export default function Home() {
             muted // Strict browser requirement for autoplay
             loop
             playsInline
-            className="w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-1000 brightness-100 md:brightness-75"
+            className={`w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-100 md:brightness-75" : "brightness-100"}`}
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
@@ -47,25 +70,26 @@ export default function Home() {
         </div>
         
         {/* Ambient Glows that appear with the text */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10" />
+        <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
+        <div className={`absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
 
         {/* 3D Glassmorphism Reveal */}
         <AnimatePresence>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-            transition={{ 
-              duration: 1.2, 
-              type: "spring", 
-              bounce: 0.3,
-              damping: 15,
-              mass: 1.2
-            }}
-            className="relative z-20 px-3 py-5 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-4 md:mt-[10vh] flex-1
-                       bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl md:rounded-[3rem] 
-                       shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
-          >
+          {showContent && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+              transition={{ 
+                duration: 1.2, 
+                type: "spring", 
+                bounce: 0.3,
+                damping: 15,
+                mass: 1.2
+              }}
+              className="relative z-20 px-4 py-6 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center my-auto md:my-0 md:mt-[10vh]
+                         bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl md:rounded-[3rem] shrink-0
+                         shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
+            >
             <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-2 md:mb-6">
               Turn long videos into <br className="hidden md:block"/>
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-br from-[#facc6b] via-[#f97316] to-[#ea580c] drop-shadow-[0_0_30px_rgba(249,115,22,0.6)] mix-blend-normal">
@@ -100,6 +124,7 @@ export default function Home() {
               </Link>
             </motion.div>
           </motion.div>
+          )}
         </AnimatePresence>
       </section>
 
