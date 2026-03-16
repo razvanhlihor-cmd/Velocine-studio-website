@@ -20,6 +20,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
 # Ensure next.js output doesn't rely on telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
