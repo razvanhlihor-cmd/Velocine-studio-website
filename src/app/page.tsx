@@ -77,9 +77,9 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center w-full bg-background overflow-hidden relative">
       {/* Cinematic Theater Hero (Video Only on Desktop, stacked on mobile) */}
-      <section className="w-full relative flex flex-col items-center justify-start md:h-[100svh] bg-black shrink-0">
+      <section className="w-full relative flex flex-col items-center justify-start md:justify-center md:h-[calc(100svh-64px)] md:min-h-[600px] bg-black shrink-0">
         
-        {/* Background Video (Hugs the top on mobile, fills entire screen on desktop) */}
+        {/* Background Video (Hugs the top on mobile, fills remaining screen on desktop) */}
         <div className="relative w-full aspect-video md:w-full md:h-full bg-black z-0 overflow-hidden shrink-0">
           <video 
             ref={videoRef}
@@ -95,7 +95,7 @@ export default function Home() {
           {/* Mute Toggle Button pinned directly to the video */}
           <button 
             onClick={toggleMute}
-            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-50 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center justify-center transition-all cursor-pointer group pointer-events-auto"
+            className="absolute bottom-3 right-3 md:bottom-12 md:right-12 z-50 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center justify-center transition-all cursor-pointer group pointer-events-auto"
             aria-label={isMuted ? "Unmute video" : "Mute video"}
           >
             {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6 group-hover:text-orange-400 transition-colors" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-orange-400" />}
