@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Play, TrendingUp, Clock, Zap } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "Examples | Velocine",
@@ -15,6 +16,7 @@ const examples = [
     description: "Transforming a 2-hour conversational podcast into punchy, high-retention TikTok hooks.",
     metrics: "+340% Engagement",
     icon: <TrendingUp className="w-5 h-5 text-orange-500" />,
+    image: "/showcase/img1.png"
   },
   {
     id: 2,
@@ -23,6 +25,7 @@ const examples = [
     description: "Automatically detecting high-action moments and funny reactions from Twitch VODs.",
     metrics: "12 Clips in 5mins",
     icon: <Zap className="w-5 h-5 text-orange-500" />,
+    image: "/showcase/img2.png"
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const examples = [
     description: "Condensing deep technical tutorials into easy-to-digest YouTube Shorts.",
     metrics: "90% Time Saved",
     icon: <Clock className="w-5 h-5 text-orange-500" />,
+    image: "/showcase/img3.png"
   },
   {
     id: 4,
@@ -39,6 +43,7 @@ const examples = [
     description: "Extracting the best room shots and stitching them to trending audio.",
     metrics: "Ready to Post",
     icon: <Play className="w-5 h-5 text-orange-500" />,
+    image: "/showcase/img4.png"
   },
 ];
 
@@ -67,11 +72,17 @@ export default function ExamplesPage() {
                 key={example.id} 
                 className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-8 hover:bg-black/60 transition-colors backdrop-blur-md"
               >
-                {/* Video Placeholder */}
+                {/* Video Placeholder / Image */}
                 <div className="relative w-full aspect-video bg-zinc-900 rounded-xl mb-8 overflow-hidden flex items-center justify-center border border-white/5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent" />
-                  <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer backdrop-blur-sm border border-orange-500/30">
-                    <Play className="w-6 h-6 text-orange-500 ml-1" />
+                  <Image 
+                    src={example.image} 
+                    alt={example.title} 
+                    fill 
+                    className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent pointer-events-none" />
+                  <div className="z-10 w-16 h-16 rounded-full bg-orange-500/80 flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer backdrop-blur-sm shadow-[0_0_30px_rgba(249,115,22,0.4)]">
+                    <Play className="w-6 h-6 text-white ml-1" />
                   </div>
                 </div>
 

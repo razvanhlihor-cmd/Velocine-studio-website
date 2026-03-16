@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -145,11 +146,14 @@ export default function Home() {
               Velocine's AI engine breaks down your 30-minute talking head into 15 perfect short-form hooks in seconds.
             </p>
           </div>
-          <div className="mx-auto max-w-5xl bg-card border border-border/50 rounded-2xl aspect-video flex items-center justify-center overflow-hidden relative">
-             {/* This is where the primary screenshot/demo will go */}
-             <div className="absolute inset-0 bg-secondary/50 flex items-center justify-center text-muted-foreground">
-                [High-Res Product Screenshot / Demo GIF Placeholder]
-             </div>
+          <div className="mx-auto max-w-5xl bg-black border border-border/50 rounded-2xl aspect-video flex items-center justify-center overflow-hidden relative shadow-2xl">
+              <Image 
+                src="/showcase/img5.png" 
+                alt="Velocine Studio AI Video Creation Platform" 
+                fill 
+                className="object-cover hover:scale-105 transition-transform duration-700"
+                priority
+              />
           </div>
         </div>
       </section>
