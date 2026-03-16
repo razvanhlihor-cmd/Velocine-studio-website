@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Velocine Studio Website
 
-## Getting Started
+The official, high-performance landing page and marketing site for Velocine Studio. Built to deliver a premium cinematic experience while instantly hooking users on the AI video generation pipeline.
 
-First, run the development server:
+## 🚀 Tech Stack
+- **Framework:** Next.js 15 (App Router, `standalone` output)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS V4 + CSS Variables (Dark mode default)
+- **Components:** `shadcn/ui` (Buttons, Sheets, Accordions)
+- **Animations:** `framer-motion`
+- **Analytics:** Google Analytics 4 & Microsoft Clarity
 
+## ✨ Key Features
+- **Cinematic Sequential Hero**: The desktop homepage features a mathematically perfect `100svh - 64px` video hook. At the climax of the video (5.5s), the browser executes a buttery-smooth, hardware-accelerated auto-scroll down to the Pitch component.
+- **Smart Mobile Battery Saver**: The mobile experience falls back to a perfect 'Single-Screen' layout. An internal `IntersectionObserver` mathematically pauses the heavy hero video loop whenever the user scrolls it out of view, aggressively saving phone battery and GPU resources.
+- **3D Glassmorphism**: High-fidelity frosted glass cards and gradient typography throughout the site.
+- **Unified Economy**: The `/pricing` page natively mirrors the internal Velocine Studio Euro-based credit schema (Explorer, Starter, Creator, Pro).
+
+## 🛠️ Local Development
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment
+Rename `.env.example` to `.env` and fill in the necessary tracking IDs if testing analytics:
+```env
+# Optional tracking IDs
+NEXT_PUBLIC_GA_MEASUREMENT_ID="G-XXXXXXXXXX"
+NEXT_PUBLIC_CLARITY_PROJECT_ID="xxxxxxxxxx"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run the Development Server
+```bash
+pnpm dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚢 Production Deployment
 
-## Learn More
+This project is configured to build as an isolated Docker container for the Velocine tunnel architecture.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker compose up -d --build velocine-website
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The `Dockerfile` employs Next.js `standalone` mode and explicitly binds `HOSTNAME "0.0.0.0"` to perfectly integrate into the Cloudflared zero-trust network without relying on Nginx proxies.
