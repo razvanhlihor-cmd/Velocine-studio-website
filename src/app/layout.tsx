@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Velocine | Premium Creator Video Tool",
   description: "Turn long videos into viral clips without touching a timeline. The premium AI co-pilot for fast, high-quality video editing.",
-  metadataBase: new URL("https://velocine.app"),
+  metadataBase: new URL("https://velocine.ai"),
 };
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://velocine.app'
+  const baseUrl = 'https://velocine.ai'
   const lastModified = new Date()
 
   return [

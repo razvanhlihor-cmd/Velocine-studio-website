@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/'],
     },
-    sitemap: 'https://velocine.app/sitemap.xml',
+    sitemap: 'https://velocine.ai/sitemap.xml',
   }
 }
