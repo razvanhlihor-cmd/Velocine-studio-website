@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  velocine-website:
+    build: .
+    image: velocine-website:latest
+    container_name: velocine-website
+    restart: unless-stopped
+    # No ports exposed to the host machine. 
+    # The Cloudflare tunnel reaches it entirely through the internal Docker network.
+
+  velocine-website-tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: velocine-website-tunnel
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      # We pull the tunnel token from a local .env file
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    depends_on:
+      - velocine-website
+
+networks:
+  default:
+    name: velocine-website-net
