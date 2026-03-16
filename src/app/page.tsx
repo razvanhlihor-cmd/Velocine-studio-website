@@ -12,13 +12,37 @@ export default function Home() {
   const [isMuted, setIsMuted] = useState(true);
   const [zoomedImg, setZoomedImg] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer to Pause/Play video based on visibility (Mobile Battery Saver)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Ignore play errors (e.g. if user hasn't interacted yet)
+            });
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.1 } // Pause if less than 10% visible
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   // Fallback: forcefully show content after 3s in case mobile autoPlay is entirely blocked
   useEffect(() => {
     const fallbackTimer = setTimeout(() => setShowContent(true), 3000);
     return () => clearTimeout(fallbackTimer);
   }, []);
-
   // Trigger the text reveal slightly before the very end of the video
   useEffect(() => {
     const video = videoRef.current;
@@ -27,7 +51,15 @@ export default function Home() {
     const handleTimeUpdate = () => {
       // The video is roughly 6 seconds long. Trigger the smash at 0.5s before the end.
       if (video.duration && video.currentTime >= video.duration - 0.5) {
-        if (!showContent) setShowContent(true);
+        if (!showContent) {
+          setShowContent(true);
+          // Auto-scroll on desktop to the newly revealed content
+          if (window.innerWidth >= 768 && contentRef.current) {
+            setTimeout(() => {
+              contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+          }
+        }
       }
     };
     
@@ -43,11 +75,11 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full bg-background overflow-hidden">
-      {/* Hero Section */}
-      <section className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[100svh] md:min-h-[95vh] border-b border-border/40 pb-6 md:pb-0" style={{ perspective: "1200px" }}>
-        {/* Background Video */}
-        <div className="relative w-full aspect-video md:absolute md:inset-0 md:aspect-auto md:h-full bg-black z-0 overflow-hidden shrink-0">
+    <div className="flex flex-col items-center w-full bg-background overflow-hidden relative">
+      {/* Cinematic Theater Hero (Video Only on Desktop) */}
+      <section className="w-full relative flex flex-col min-h-auto md:min-h-[100svh] bg-black">
+        {/* Background Video (Sticky on mobile to stack, absolute fill on desktop) */}
+        <div className="relative w-full aspect-video md:absolute md:inset-0 md:h-[100svh] bg-black z-0 overflow-hidden shrink-0">
           <video 
             ref={videoRef}
             autoPlay 
@@ -62,16 +94,19 @@ export default function Home() {
           {/* Mute Toggle Button pinned directly to the video */}
           <button 
             onClick={toggleMute}
-            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-30 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center justify-center transition-all cursor-pointer group"
+            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-50 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center justify-center transition-all cursor-pointer group pointer-events-auto"
             aria-label={isMuted ? "Unmute video" : "Mute video"}
           >
             {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6 group-hover:text-orange-400 transition-colors" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-orange-400" />}
           </button>
         </div>
-        
-        {/* Ambient Glows that appear with the text */}
-        <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
-        <div className={`absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
+      </section>
+
+      {/* The Pitch (Text content that appears below the video on Desktop, stacked on Mobile) */}
+      <div 
+        ref={contentRef}
+        className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[50vh] md:min-h-[85vh] py-8 md:py-24 border-b border-border/40 bg-zinc-950 px-4 z-20"
+      >
 
         {/* 3D Glassmorphism Reveal */}
         <AnimatePresence>
@@ -126,7 +161,7 @@ export default function Home() {
           </motion.div>
           )}
         </AnimatePresence>
-      </section>
+      </div>
 
       {/* Trust / Proof Strip (gets the ID details for the scroll button) */}
       <section id="details" className="w-full py-16 border-b border-border/40 bg-zinc-950/50">
