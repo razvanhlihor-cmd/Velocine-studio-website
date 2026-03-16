@@ -20,17 +20,17 @@ export default function PricingPage() {
       <section className="w-full pb-24">
         <div className="container px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Starter Plan */}
+            {/* Free Plan */}
             <div className="p-8 bg-card border border-border/50 rounded-2xl space-y-8 flex flex-col">
               <div>
-                <h3 className="text-xl font-bold">Starter</h3>
-                <p className="text-muted-foreground mt-2">For independent creators</p>
+                <h3 className="text-xl font-bold">Free</h3>
+                <p className="text-zinc-400 mt-2">To explore the platform</p>
               </div>
-              <div className="text-4xl font-bold">$19<span className="text-lg text-muted-foreground font-normal">/mo</span></div>
-              <ul className="space-y-4 text-sm flex-1">
-                <li>✓ 20 AI Analysis Credits</li>
-                <li>✓ 4K Exports</li>
-                <li>✓ Basic Captions</li>
+              <div className="text-4xl font-bold">$0<span className="text-lg text-zinc-400 font-normal">/mo</span></div>
+              <ul className="space-y-4 text-sm flex-1 text-zinc-300">
+                <li>✓ 10 AI Analysis Minutes / mo</li>
+                <li>✓ Basic 1080p Exports</li>
+                <li>✓ Standard Captions</li>
               </ul>
               <Link href="https://studio.velocine.app/login">
                 <Button variant="outline" className="w-full h-12">Start Free</Button>
@@ -44,35 +44,35 @@ export default function PricingPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold">Pro</h3>
-                <p className="text-muted-foreground mt-2">For serious workflows</p>
+                <p className="text-zinc-400 mt-2">For serious workflows</p>
               </div>
-              <div className="text-4xl font-bold">$49<span className="text-lg text-muted-foreground font-normal">/mo</span></div>
-              <ul className="space-y-4 text-sm flex-1">
-                <li>✓ 100 AI Analysis Credits</li>
+              <div className="text-4xl font-bold">$49<span className="text-lg text-zinc-400 font-normal">/mo</span></div>
+              <ul className="space-y-4 text-sm flex-1 text-zinc-200">
+                <li>✓ 120 AI Analysis Minutes / mo</li>
+                <li>✓ 4K Unlimited Exports</li>
                 <li>✓ Custom Brand Kits</li>
-                <li>✓ Smart B-roll Engine</li>
-                <li>✓ Priority Queue</li>
+                <li>✓ Priority Render Queue</li>
               </ul>
               <Link href="https://studio.velocine.app/login">
                 <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground">Upgrade to Pro</Button>
               </Link>
             </div>
 
-            {/* Business Plan */}
+            {/* Enterprise Plan */}
             <div className="p-8 bg-card border border-border/50 rounded-2xl space-y-8 flex flex-col">
               <div>
-                <h3 className="text-xl font-bold">Studio</h3>
-                <p className="text-muted-foreground mt-2">For teams and agencies</p>
+                <h3 className="text-xl font-bold">Enterprise</h3>
+                <p className="text-zinc-400 mt-2">For teams and agencies</p>
               </div>
-              <div className="text-4xl font-bold">$149<span className="text-lg text-muted-foreground font-normal">/mo</span></div>
-              <ul className="space-y-4 text-sm flex-1">
-                <li>✓ Unlimited Analysis</li>
+              <div className="text-4xl font-bold md:text-3xl lg:text-4xl">Custom</div>
+              <ul className="space-y-4 text-sm flex-1 text-zinc-300">
+                <li>✓ Custom Analysis Limits</li>
                 <li>✓ Team Collaboration</li>
+                <li>✓ Dedicated Account Manager</li>
                 <li>✓ API Access</li>
-                <li>✓ Dedicated Manager</li>
               </ul>
               <Link href="/contact">
-                <Button variant="outline" className="w-full h-12">Contact Sales</Button>
+                <Button variant="outline" className="w-full h-12 text-white">Contact Sales</Button>
               </Link>
             </div>
           </div>

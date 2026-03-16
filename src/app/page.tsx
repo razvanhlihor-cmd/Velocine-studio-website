@@ -4,12 +4,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, X } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [zoomedImg, setZoomedImg] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggleMute = () => {
@@ -41,14 +42,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="w-full relative flex flex-col items-center justify-center min-h-[95vh] border-b border-border/40" style={{ perspective: "1200px" }}>
         {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full bg-black z-0">
+        <div className="absolute inset-0 w-full h-full bg-black z-0 flex items-center justify-center">
           <video 
             ref={videoRef}
             autoPlay 
             muted // Strict browser requirement for autoplay
             playsInline
             onEnded={() => setShowContent(true)}
-            className={`w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-75" : "brightness-100"}`}
+            className={`w-full h-full object-contain md:object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-75" : "brightness-100"}`}
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
@@ -57,7 +58,7 @@ export default function Home() {
         {/* Mute Toggle Button */}
         <button 
           onClick={toggleMute}
-          className="absolute bottom-8 right-8 z-30 p-3 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-black/60 transition-all cursor-pointer shadow-lg hover:scale-110 active:scale-95"
+          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-30 p-3 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-black/60 transition-all cursor-pointer shadow-lg hover:scale-110 active:scale-95"
           aria-label={isMuted ? "Unmute video" : "Mute video"}
         >
           {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
@@ -80,11 +81,11 @@ export default function Home() {
                 damping: 15,
                 mass: 1.2
               }}
-              className="relative z-20 px-8 py-16 w-full max-w-5xl flex flex-col items-center justify-center text-center mt-[10vh]
-                         bg-black/30 backdrop-blur-2xl border border-white/10 rounded-[3rem] 
+              className="relative z-20 px-6 py-10 md:px-8 md:py-16 w-[92%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-12 md:mt-[10vh]
+                         bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] md:rounded-[3rem] 
                          shadow-[0_30px_100px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
             >
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-4 md:mb-6">
                 Turn long videos into <br className="hidden md:block"/>
                 <span className="text-primary bg-clip-text text-transparent bg-gradient-to-br from-[#facc6b] via-[#f97316] to-[#ea580c] drop-shadow-[0_0_30px_rgba(249,115,22,0.6)] mix-blend-normal">
                   viral clips.
@@ -95,7 +96,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
-                className="mt-6 text-xl md:text-2xl font-medium text-white/90 max-w-3xl mx-auto drop-shadow-[0_4px_10px_rgba(0,0,0,1)] leading-relaxed"
+                className="mt-4 md:mt-6 text-base sm:text-xl md:text-2xl font-medium text-zinc-100 max-w-3xl mx-auto drop-shadow-[0_4px_10px_rgba(0,0,0,1)] leading-relaxed"
               >
                 Velocine is your AI co-pilot for editing. Upload once, get hooks, shorts, and ready-to-post clips for every platform without touching a timeline.
               </motion.p>
@@ -104,15 +105,15 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 0.6, type: "spring" }}
-                className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-12"
+                className="flex flex-col flex-wrap sm:flex-row items-center justify-center gap-4 pt-8 md:pt-12 w-full"
               >
-                <Link href="https://studio.velocine.app/login">
-                  <Button size="lg" className="h-16 px-12 text-xl font-bold bg-gradient-to-r from-[#facc6b] to-[#f97316] hover:opacity-90 text-black border-none shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_rgba(249,115,22,0.8)] rounded-full transition-all hover:scale-105 active:scale-95">
+                <Link href="https://studio.velocine.app/login" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-12 text-lg font-bold bg-gradient-to-r from-[#facc6b] to-[#f97316] hover:opacity-90 text-black border-none shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_rgba(249,115,22,0.8)] rounded-full transition-all hover:scale-105 active:scale-95">
                     Start creating free
                   </Button>
                 </Link>
-                <Link href="#details">
-                  <Button size="lg" variant="outline" className="h-16 px-10 text-lg font-medium rounded-full backdrop-blur-xl bg-white/5 border-white/20 hover:bg-white/15 text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all hover:scale-105 active:scale-95">
+                <Link href="#details" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-10 text-lg font-medium rounded-full backdrop-blur-xl bg-white/5 border-white/20 hover:bg-white/15 text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all hover:scale-105 active:scale-95">
                     Scroll for details
                   </Button>
                 </Link>
@@ -138,40 +139,79 @@ export default function Home() {
       </section>
 
       {/* Feature / Workflow Highlight */}
-      <section className="w-full py-24">
+      <section className="w-full py-16 md:py-24">
         <div className="container px-4">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold">Stop manual editing. Start generating.</h2>
-            <p className="text-muted-foreground text-lg">
+          <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Stop manual editing. <br className="md:hidden" />Start generating.</h2>
+            <p className="text-zinc-300 text-lg md:text-xl max-w-xl mx-auto">
               Velocine's AI engine breaks down your 30-minute talking head into 15 perfect short-form hooks in seconds.
             </p>
           </div>
-          <div className="mx-auto max-w-5xl bg-black border border-border/50 rounded-2xl aspect-video flex items-center justify-center overflow-hidden relative shadow-2xl">
+          <div 
+            className="mx-auto max-w-5xl bg-black border border-border/50 rounded-2xl aspect-video flex items-center justify-center overflow-hidden relative shadow-2xl cursor-pointer group"
+            onClick={() => setZoomedImg("/showcase/img4.png")}
+          >
               <Image 
-                src="/showcase/img5.png" 
+                src="/showcase/img4.png" 
                 alt="Velocine Studio AI Video Creation Platform" 
                 fill 
-                className="object-cover hover:scale-105 transition-transform duration-700"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
                 priority
               />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                 <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium border border-white/10">
+                    Click to zoom
+                 </div>
+              </div>
           </div>
         </div>
       </section>
       
       {/* Final CTA Strip */}
-      <section className="w-full py-24 bg-card border-t border-border/40">
-        <div className="container px-4 text-center max-w-3xl space-y-8">
-          <h2 className="text-3xl md:text-5xl font-bold">Ready to scale your output?</h2>
-          <p className="text-xl text-muted-foreground">
+      <section className="w-full py-16 md:py-24 bg-card border-t border-border/40">
+        <div className="container px-4 text-center max-w-3xl space-y-6 md:space-y-8">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Ready to scale your output?</h2>
+          <p className="text-lg md:text-2xl text-zinc-300">
             Join the creators building their content empires on Velocine.
           </p>
            <Link href="https://studio.velocine.app/login">
-            <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button size="lg" className="h-14 md:h-16 px-8 md:px-12 mt-4 md:mt-2 text-lg font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(249,115,22,0.3)] rounded-full hover:scale-105 active:scale-95 transition-transform">
               Start your free trial
             </Button>
           </Link>
         </div>
       </section>
+
+      {/* Full-screen Lightbox Modal */}
+      <AnimatePresence>
+        {zoomedImg && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setZoomedImg(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 md:p-12 cursor-zoom-out"
+          >
+            <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-7xl aspect-[9/16] md:aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="absolute top-2 right-2 md:top-4 md:right-4 z-50 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/10 backdrop-blur-sm"
+                onClick={() => setZoomedImg(null)}
+              >
+                <X className="w-5 h-5" />
+              </Button>
+              <Image 
+                src={zoomedImg} 
+                alt="Velocine Studio Zoomed" 
+                fill 
+                className="object-contain"
+                priority
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

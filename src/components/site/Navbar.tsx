@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 const navLinks = [
@@ -75,25 +75,30 @@ function MobileNav() {
   return (
     <div className="flex flex-col space-y-3 pt-6">
       {navLinks.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="text-foreground/70 transition-colors hover:text-foreground"
-        >
-          {link.label}
-        </Link>
+        <SheetClose asChild key={link.href}>
+          <Link
+            href={link.href}
+            className="text-foreground/70 transition-colors hover:text-foreground"
+          >
+            {link.label}
+          </Link>
+        </SheetClose>
       ))}
-      <div className="flex flex-col gap-2 pt-4 border-t border-border/40">
-        <Link href="https://studio.velocine.app/login">
-          <Button variant="outline" className="w-full">
-            Sign in
-          </Button>
-        </Link>
-        <Link href="https://studio.velocine.app/login">
-          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-            Start free
-          </Button>
-        </Link>
+      <div className="flex flex-col gap-2 pt-4 border-t border-border/40 mr-4">
+        <SheetClose asChild>
+          <Link href="https://studio.velocine.app/login">
+            <Button variant="outline" className="w-full">
+              Sign in
+            </Button>
+          </Link>
+        </SheetClose>
+        <SheetClose asChild>
+          <Link href="https://studio.velocine.app/login">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              Start free
+            </Button>
+          </Link>
+        </SheetClose>
       </div>
     </div>
   );
