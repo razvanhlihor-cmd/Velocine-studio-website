@@ -68,7 +68,7 @@ export default function ProductPage() {
       <section className="w-full py-24 bg-card border-t border-border/40">
         <div className="container px-4 text-center max-w-3xl space-y-8">
           <h2 className="text-3xl md:text-4xl font-bold">Experience the workflow</h2>
-          <Link href="https://studio.velocine.app/signup">
+          <Link href="https://studio.velocine.app/login">
             <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground">
               Try Velocine Studio
             </Button>

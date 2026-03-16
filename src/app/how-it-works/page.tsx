@@ -84,7 +84,7 @@ export default function HowItWorksPage() {
       {/* CTA */}
       <section className="w-full py-24 bg-card border-t border-border/40 text-center space-y-8">
         <h2 className="text-3xl font-bold">Skip the timeline.</h2>
-        <Link href="https://studio.velocine.app/signup">
+        <Link href="https://studio.velocine.app/login">
           <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">Try the Workflow</Button>
         </Link>
       </section>

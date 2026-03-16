@@ -105,7 +105,7 @@ export default function Home() {
                 transition={{ delay: 0.9, duration: 0.6, type: "spring" }}
                 className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-12"
               >
-                <Link href="https://studio.velocine.app/signup">
+                <Link href="https://studio.velocine.app/login">
                   <Button size="lg" className="h-16 px-12 text-xl font-bold bg-gradient-to-r from-[#facc6b] to-[#f97316] hover:opacity-90 text-black border-none shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_rgba(249,115,22,0.8)] rounded-full transition-all hover:scale-105 active:scale-95">
                     Start creating free
                   </Button>
@@ -161,7 +161,7 @@ export default function Home() {
           <p className="text-xl text-muted-foreground">
             Join the creators building their content empires on Velocine.
           </p>
-           <Link href="https://studio.velocine.app/signup">
+           <Link href="https://studio.velocine.app/login">
             <Button size="lg" className="h-14 px-10 text-lg bg-primary hover:bg-primary/90 text-primary-foreground">
               Start your free trial
             </Button>

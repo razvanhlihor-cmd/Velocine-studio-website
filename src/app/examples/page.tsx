@@ -106,7 +106,7 @@ export default function ExamplesPage() {
           <p className="text-xl text-muted-foreground mb-10">
             Join the creators who are decoupling their time from their growth.
           </p>
-          <Link href="https://studio.velocine.app/signup">
+          <Link href="https://studio.velocine.app/login">
             <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:shadow-[0_0_50px_rgba(249,115,22,0.6)] transition-all">
               Try Velocine for Free
             </Button>

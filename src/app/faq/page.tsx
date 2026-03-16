@@ -76,7 +76,7 @@ export default function FAQPage() {
                 Contact Support
               </Button>
             </Link>
-            <Link href="https://studio.velocine.app/signup">
+            <Link href="https://studio.velocine.app/login">
               <Button size="lg" className="h-12 px-8 rounded-full bg-orange-500 hover:bg-orange-600 text-white">
                 Try Velocine Free
               </Button>

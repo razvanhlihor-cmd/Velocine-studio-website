@@ -32,7 +32,7 @@ export default function PricingPage() {
                 <li>✓ 4K Exports</li>
                 <li>✓ Basic Captions</li>
               </ul>
-              <Link href="https://studio.velocine.app/signup">
+              <Link href="https://studio.velocine.app/login">
                 <Button variant="outline" className="w-full h-12">Start Free</Button>
               </Link>
             </div>
@@ -53,7 +53,7 @@ export default function PricingPage() {
                 <li>✓ Smart B-roll Engine</li>
                 <li>✓ Priority Queue</li>
               </ul>
-              <Link href="https://studio.velocine.app/signup">
+              <Link href="https://studio.velocine.app/login">
                 <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground">Upgrade to Pro</Button>
               </Link>
             </div>

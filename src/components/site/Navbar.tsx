@@ -45,7 +45,7 @@ export function Navbar() {
                 Sign in
               </Button>
             </Link>
-            <Link href="https://studio.velocine.app/signup">
+            <Link href="https://studio.velocine.app/login">
               <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 Start free
               </Button>
@@ -89,7 +89,7 @@ function MobileNav() {
             Sign in
           </Button>
         </Link>
-        <Link href="https://studio.velocine.app/signup">
+        <Link href="https://studio.velocine.app/login">
           <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
             Start free
           </Button>
