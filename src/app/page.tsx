@@ -20,7 +20,13 @@ export default function Home() {
     }
   };
 
-  // Trigger the text reveal slightly before the very end of the video 
+  // Fallback: forcefully show content after 3s in case mobile autoPlay is entirely blocked by iOS/Android battery saver
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => setShowContent(true), 3000);
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
+  // Trigger the text reveal slightly before the very end of the video
   // to make it feel like the text hits exactly when the video climax happens.
   useEffect(() => {
     const video = videoRef.current;
@@ -82,7 +88,7 @@ export default function Home() {
                 damping: 15,
                 mass: 1.2
               }}
-              className="relative z-20 px-6 py-10 md:px-8 md:py-16 w-[92%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-12 md:mt-[10vh]
+              className="relative z-20 px-4 py-8 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-6 md:mt-[10vh] flex-1
                          bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] md:rounded-[3rem] 
                          shadow-[0_30px_100px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
             >
