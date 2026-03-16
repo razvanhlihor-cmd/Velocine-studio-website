@@ -40,29 +40,30 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center w-full bg-background overflow-hidden">
       {/* Hero Section */}
-      <section className="w-full relative flex flex-col items-center justify-center min-h-[95vh] border-b border-border/40" style={{ perspective: "1200px" }}>
+      <section className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[100svh] md:min-h-[95vh] border-b border-border/40 pb-12 md:pb-0" style={{ perspective: "1200px" }}>
         {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full bg-black z-0 flex items-center justify-center">
+        <div className="relative w-full aspect-video md:absolute md:inset-0 md:aspect-auto md:h-full bg-black z-0 overflow-hidden shrink-0">
           <video 
             ref={videoRef}
             autoPlay 
             muted // Strict browser requirement for autoplay
             playsInline
             onEnded={() => setShowContent(true)}
-            className={`w-full h-full object-contain md:object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-75" : "brightness-100"}`}
+            className={`w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-100 md:brightness-75" : "brightness-100"}`}
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-        </div>
 
-        {/* Mute Toggle Button */}
-        <button 
-          onClick={toggleMute}
-          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-30 p-3 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-black/60 transition-all cursor-pointer shadow-lg hover:scale-110 active:scale-95"
-          aria-label={isMuted ? "Unmute video" : "Mute video"}
-        >
-          {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-        </button>
+          {/* Mute Toggle Button pinned directly to the video */}
+          <button 
+            onClick={toggleMute}
+            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-30 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center gap-2 transition-all cursor-pointer group"
+            aria-label={isMuted ? "Unmute video" : "Mute video"}
+          >
+            {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6 group-hover:text-orange-400 transition-colors" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-orange-400" />}
+            <span className="text-xs font-bold md:hidden pr-1 uppercase tracking-wider">{isMuted ? "Unmute" : "Sound"}</span>
+          </button>
+        </div>
         
         {/* Ambient Glows that appear with the text */}
         <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10 transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
