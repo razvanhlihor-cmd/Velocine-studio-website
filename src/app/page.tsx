@@ -8,7 +8,6 @@ import { Volume2, VolumeX, X } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [zoomedImg, setZoomedImg] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -20,42 +19,19 @@ export default function Home() {
     }
   };
 
-  // Fallback: forcefully show content after 3s in case mobile autoPlay is entirely blocked by iOS/Android battery saver
-  useEffect(() => {
-    const fallbackTimer = setTimeout(() => setShowContent(true), 3000);
-    return () => clearTimeout(fallbackTimer);
-  }, []);
-
-  // Trigger the text reveal slightly before the very end of the video
-  // to make it feel like the text hits exactly when the video climax happens.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleTimeUpdate = () => {
-      // The video is roughly 6 seconds long. Trigger the smash at 0.5s before the end.
-      if (video.duration && video.currentTime >= video.duration - 0.5) {
-        if (!showContent) setShowContent(true);
-      }
-    };
-    
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
-  }, [showContent]);
-
   return (
     <div className="flex flex-col items-center w-full bg-background overflow-hidden">
       {/* Hero Section */}
-      <section className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[100svh] md:min-h-[95vh] border-b border-border/40 pb-12 md:pb-0" style={{ perspective: "1200px" }}>
+      <section className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[100svh] md:min-h-[95vh] border-b border-border/40 pb-6 md:pb-0" style={{ perspective: "1200px" }}>
         {/* Background Video */}
         <div className="relative w-full aspect-video md:absolute md:inset-0 md:aspect-auto md:h-full bg-black z-0 overflow-hidden shrink-0">
           <video 
             ref={videoRef}
             autoPlay 
             muted // Strict browser requirement for autoplay
+            loop
             playsInline
-            onEnded={() => setShowContent(true)}
-            className={`w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-[2000ms] ${showContent ? "brightness-100 md:brightness-75" : "brightness-100"}`}
+            className="w-full h-full object-cover filter saturate-110 contrast-105 transition-all duration-1000 brightness-100 md:brightness-75"
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
@@ -63,70 +39,67 @@ export default function Home() {
           {/* Mute Toggle Button pinned directly to the video */}
           <button 
             onClick={toggleMute}
-            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-30 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center gap-2 transition-all cursor-pointer group"
+            className="absolute bottom-3 right-3 md:bottom-8 md:right-8 z-30 p-2 md:p-3 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white shadow-xl hover:scale-110 active:scale-95 flex items-center justify-center transition-all cursor-pointer group"
             aria-label={isMuted ? "Unmute video" : "Mute video"}
           >
             {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6 group-hover:text-orange-400 transition-colors" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-orange-400" />}
-            <span className="text-xs font-bold md:hidden pr-1 uppercase tracking-wider">{isMuted ? "Unmute" : "Sound"}</span>
           </button>
         </div>
         
         {/* Ambient Glows that appear with the text */}
-        <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10 transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
-        <div className={`absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10 transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10" />
 
         {/* 3D Glassmorphism Reveal */}
         <AnimatePresence>
-          {showContent && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8, y: 100, rotateX: 30, filter: "blur(15px)" }}
-              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-              transition={{ 
-                duration: 1.4, 
-                type: "spring", 
-                bounce: 0.3,
-                damping: 15,
-                mass: 1.2
-              }}
-              className="relative z-20 px-4 py-8 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-6 md:mt-[10vh] flex-1
-                         bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] md:rounded-[3rem] 
-                         shadow-[0_30px_100px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+            transition={{ 
+              duration: 1.2, 
+              type: "spring", 
+              bounce: 0.3,
+              damping: 15,
+              mass: 1.2
+            }}
+            className="relative z-20 px-3 py-5 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center mt-4 md:mt-[10vh] flex-1
+                       bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl md:rounded-[3rem] 
+                       shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-2 md:mb-6">
+              Turn long videos into <br className="hidden md:block"/>
+              <span className="text-primary bg-clip-text text-transparent bg-gradient-to-br from-[#facc6b] via-[#f97316] to-[#ea580c] drop-shadow-[0_0_30px_rgba(249,115,22,0.6)] mix-blend-normal">
+                viral clips.
+              </span>
+            </h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+              className="mt-2 md:mt-6 text-sm sm:text-base md:text-2xl font-medium text-zinc-100 max-w-3xl mx-auto drop-shadow-[0_4px_10px_rgba(0,0,0,1)] leading-snug md:leading-relaxed"
             >
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-4 md:mb-6">
-                Turn long videos into <br className="hidden md:block"/>
-                <span className="text-primary bg-clip-text text-transparent bg-gradient-to-br from-[#facc6b] via-[#f97316] to-[#ea580c] drop-shadow-[0_0_30px_rgba(249,115,22,0.6)] mix-blend-normal">
-                  viral clips.
-                </span>
-              </h1>
-              
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
-                className="mt-4 md:mt-6 text-base sm:text-xl md:text-2xl font-medium text-zinc-100 max-w-3xl mx-auto drop-shadow-[0_4px_10px_rgba(0,0,0,1)] leading-relaxed"
-              >
-                Velocine is your AI co-pilot for editing. Upload once, get hooks, shorts, and ready-to-post clips for every platform without touching a timeline.
-              </motion.p>
-              
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.6, type: "spring" }}
-                className="flex flex-col flex-wrap sm:flex-row items-center justify-center gap-4 pt-8 md:pt-12 w-full"
-              >
-                <Link href="https://studio.velocine.app/login" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-12 text-lg font-bold bg-gradient-to-r from-[#facc6b] to-[#f97316] hover:opacity-90 text-black border-none shadow-[0_0_40px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_rgba(249,115,22,0.8)] rounded-full transition-all hover:scale-105 active:scale-95">
-                    Start creating free
-                  </Button>
-                </Link>
-                <Link href="#details" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-10 text-lg font-medium rounded-full backdrop-blur-xl bg-white/5 border-white/20 hover:bg-white/15 text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all hover:scale-105 active:scale-95">
-                    Scroll for details
-                  </Button>
-                </Link>
-              </motion.div>
+              Velocine is your AI co-pilot for editing. Upload once, get hooks, shorts, and ready-to-post clips for every platform without touching a timeline.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 md:pt-12 w-full"
+            >
+              <Link href="https://studio.velocine.app/login" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto h-12 md:h-16 px-6 md:px-12 text-base md:text-lg font-bold bg-gradient-to-r from-[#facc6b] to-[#f97316] hover:opacity-90 text-black border-none shadow-[0_0_30px_rgba(249,115,22,0.5)] hover:shadow-[0_0_50px_rgba(249,115,22,0.8)] rounded-full transition-all hover:scale-105 active:scale-95">
+                  Start creating free
+                </Button>
+              </Link>
+              <Link href="#details" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 md:h-16 px-6 md:px-10 text-base md:text-lg font-medium rounded-full backdrop-blur-xl bg-white/5 border-white/20 hover:bg-white/15 text-white shadow-[0_4px_15px_rgba(0,0,0,0.5)] transition-all hover:scale-105 active:scale-95">
+                  Scroll for details
+                </Button>
+              </Link>
             </motion.div>
-          )}
+          </motion.div>
         </AnimatePresence>
       </section>
 
