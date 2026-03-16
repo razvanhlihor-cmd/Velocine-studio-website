@@ -13,6 +13,7 @@ export default function Home() {
   const [zoomedImg, setZoomedImg] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const hasAutoScrolled = useRef(false);
 
   // Intersection Observer to Pause/Play video based on visibility (Mobile Battery Saver)
   useEffect(() => {
@@ -53,12 +54,14 @@ export default function Home() {
       if (video.duration && video.currentTime >= video.duration - 0.5) {
         if (!showContent) {
           setShowContent(true);
-          // Auto-scroll on desktop to the newly revealed content
-          if (window.innerWidth >= 768 && contentRef.current) {
-            setTimeout(() => {
-              contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-          }
+        }
+        
+        // Auto-scroll on desktop exactly once, completely independent of the 3s fallback timer
+        if (!hasAutoScrolled.current && window.innerWidth >= 768 && contentRef.current) {
+          hasAutoScrolled.current = true;
+          setTimeout(() => {
+            contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
         }
       }
     };
