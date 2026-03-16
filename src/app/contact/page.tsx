@@ -47,7 +47,7 @@ export default function ContactPage() {
           {/* Contact Form Placeholder */}
           <div className="col-span-1 lg:col-span-2 p-8 md:p-12 rounded-3xl bg-black/40 backdrop-blur-md border border-white/5 shadow-2xl">
              <h2 className="text-3xl font-bold mb-8">Send us a message</h2>
-             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+             <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="space-y-2">
                       <label className="text-sm font-medium text-zinc-400">First Name</label>
