@@ -76,10 +76,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center w-full bg-background overflow-hidden relative">
-      {/* Cinematic Theater Hero (Video Only on Desktop) */}
-      <section className="w-full relative flex flex-col min-h-auto md:min-h-[100svh] bg-black">
-        {/* Background Video (Sticky on mobile to stack, absolute fill on desktop) */}
-        <div className="relative w-full aspect-video md:absolute md:inset-0 md:h-[100svh] bg-black z-0 overflow-hidden shrink-0">
+      {/* Cinematic Theater Hero (Video Only on Desktop, stacked on mobile) */}
+      <section className="w-full relative flex flex-col items-center justify-start md:h-[100svh] bg-black shrink-0">
+        
+        {/* Background Video (Hugs the top on mobile, fills entire screen on desktop) */}
+        <div className="relative w-full aspect-video md:w-full md:h-full bg-black z-0 overflow-hidden shrink-0">
           <video 
             ref={videoRef}
             autoPlay 
@@ -102,29 +103,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Pitch (Text content that appears below the video on Desktop, stacked on Mobile) */}
+      {/* The Pitch (Text content that appears immediately below the video on Desktop, statically stacked on Mobile) */}
       <div 
         ref={contentRef}
-        className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[50vh] md:min-h-[85vh] py-8 md:py-24 border-b border-border/40 bg-zinc-950 px-4 z-20"
+        className="w-full relative flex flex-col items-center justify-start md:justify-center min-h-[50vh] md:min-h-[100svh] pb-8 pt-4 md:py-24 border-b border-border/40 bg-zinc-950 px-4 z-20"
       >
+        {/* Ambient Glows that appear with the text */}
+        <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100 md:opacity-100" : "opacity-100 md:opacity-0"}`} />
+        <div className={`absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-opacity duration-1000 ${showContent ? "opacity-100 md:opacity-100" : "opacity-100 md:opacity-0"}`} />
 
         {/* 3D Glassmorphism Reveal */}
         <AnimatePresence>
-          {showContent && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20, filter: "blur(10px)" }}
-              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-              transition={{ 
-                duration: 1.2, 
-                type: "spring", 
-                bounce: 0.3,
-                damping: 15,
-                mass: 1.2
-              }}
-              className="relative z-20 px-4 py-6 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center my-auto md:my-0 md:mt-[10vh]
-                         bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl md:rounded-[3rem] shrink-0
-                         shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
-            >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+            transition={{ 
+              duration: 1.2, 
+              type: "spring", 
+              bounce: 0.3,
+              damping: 15,
+              mass: 1.2
+            }}
+            className="relative z-20 px-4 py-6 md:px-8 md:py-16 w-[96%] md:w-full max-w-5xl flex flex-col items-center justify-center text-center my-auto md:my-0
+                       bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl md:rounded-[3rem] shrink-0
+                       shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.2)]"
+          >
             <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] leading-tight mb-2 md:mb-6">
               Turn long videos into <br className="hidden md:block"/>
               <span className="text-primary bg-clip-text text-transparent bg-gradient-to-br from-[#facc6b] via-[#f97316] to-[#ea580c] drop-shadow-[0_0_30px_rgba(249,115,22,0.6)] mix-blend-normal">
@@ -159,7 +162,6 @@ export default function Home() {
               </Link>
             </motion.div>
           </motion.div>
-          )}
         </AnimatePresence>
       </div>
 
