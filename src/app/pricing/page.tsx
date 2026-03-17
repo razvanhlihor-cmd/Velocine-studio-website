@@ -115,7 +115,7 @@ export default function PricingPage() {
         MOBILE HERO SCENE (Hidden on lg desktops)
         ========================================================
       */}
-      <div className="block xl:hidden relative w-full h-[60svh] bg-black shrink-0 border-b border-white/10 overflow-hidden">
+      <div className="block xl:hidden relative w-full h-[80svh] bg-black shrink-0 border-b border-white/10 overflow-hidden">
         
         {/* Gradient Fade to blend with content */}
         <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
@@ -165,8 +165,8 @@ export default function PricingPage() {
         Desktop: Takes up left 50-60% of viewport, scrolls independently
         ========================================================
       */}
-      <div className="w-full xl:w-[55%] xl:h-screen xl:overflow-y-auto custom-scrollbar relative z-30 pb-32">
-        <div className="px-4 md:px-12 py-16 md:py-24 max-w-3xl mx-auto xl:ml-auto xl:mr-12">
+      <div className="w-full xl:w-[60%] xl:h-screen xl:overflow-y-auto custom-scrollbar relative z-30 pb-32">
+        <div className="px-4 md:px-12 py-16 md:py-24 max-w-5xl mx-auto xl:ml-auto xl:mr-12">
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -178,12 +178,13 @@ export default function PricingPage() {
               Clear pricing for <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">creators</span> who scale.
             </h1>
-            <p className="text-xl text-zinc-400 font-medium max-w-lg">
+            <p className="text-xl text-zinc-400 font-medium max-w-xl">
               No hidden fees. Just pure computing power turned into ready-to-post variants.
             </p>
           </motion.div>
 
-          <div className="flex flex-col gap-8 [perspective:1400px]">
+          {/* Pricing Cards - Rendered 2x2 on Desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 [perspective:1400px]">
             
             {/* Starter Plan */}
             <TiltCard>
@@ -274,7 +275,7 @@ export default function PricingPage() {
         Hidden on mobile. Fixed to right side on desktop.
         ========================================================
       */}
-      <div className="hidden xl:block absolute right-0 top-0 w-[45%] h-screen bg-black overflow-hidden border-l border-white/10 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] z-20">
+      <div className="hidden xl:block absolute right-0 top-0 w-[40%] h-screen bg-black overflow-hidden border-l border-white/10 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] z-20">
         
         {/* Cinematic Lighting Overlays */}
         <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-orange-500/10 blur-[150px] rounded-full pointer-events-none z-0" />
