@@ -120,7 +120,7 @@ function SplineSceneHero() {
         <div className="flex-1 relative min-h-[400px] bg-black/50">
           <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading 3D Engine...</div>}>
             <Spline 
-              scene="https://prod.spline.design/kZDDjO5AHGQcg012/scene.splinecode"
+              scene="https://prod.spline.design/kZDDjO6HUC96JUM2/scene.splinecode"
               className="w-full h-full object-cover"
             />
           </Suspense>
@@ -216,11 +216,11 @@ export default function PricingPage() {
 
             {/* Creator Plan (Most Popular) */}
             <TiltCard popular>
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-orange-600 px-5 py-1.5 rounded-full text-[10px] font-black tracking-widest shadow-xl uppercase ring-4 ring-orange-500/20">
-                Most Popular
-              </div>
-              <div className="mb-6">
-                 <h3 className="text-xl font-bold flex items-center gap-2">Creator</h3>
+              <div className="flex flex-col items-start gap-3 mb-4">
+                <div className="bg-white text-orange-600 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest shadow-xl uppercase ring-4 ring-orange-500/20">
+                  Most Popular
+                </div>
+                <h3 className="text-2xl font-bold flex items-center gap-2">Creator</h3>
               </div>
               <div className="text-5xl font-black mb-1 flex items-baseline gap-1">€59<span className="text-lg text-white/70 font-bold"> /mo</span></div>
               <p className="text-white/80 text-sm mb-6 font-medium">400 / mo</p>
@@ -248,10 +248,10 @@ export default function PricingPage() {
 
             {/* Pro Plan */}
             <TiltCard dark>
-               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-zinc-300 px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-lg">
-                Power users
-              </div>
-              <div className="mb-6">
+              <div className="flex flex-col items-start gap-3 mb-5">
+                 <div className="bg-zinc-800 border border-zinc-700 text-zinc-300 px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-sm">
+                  Power users
+                </div>
                  <h3 className="text-xl font-bold flex items-center gap-2">Pro</h3>
               </div>
               <div className="text-4xl font-black mb-1">€149<span className="text-lg text-zinc-500 font-normal"> /mo</span></div>
