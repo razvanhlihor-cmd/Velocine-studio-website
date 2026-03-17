@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import React, { Suspense, Component } from "react";
 import { MousePointer2, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Robust Error Boundary to catch 403s or bad data from Spline
 class SplineErrorBoundary extends Component<{children: React.ReactNode, fallback: React.ReactNode}, {hasError: boolean}> {
@@ -41,6 +42,7 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
  * Insane 3D Tilt Card Component for Pricing - Floating Glassmorphism Edition
  */
 function TiltCard({ children, popular = false }: { children: React.ReactNode, popular?: boolean }) {
+  const router = useRouter();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -67,15 +69,18 @@ function TiltCard({ children, popular = false }: { children: React.ReactNode, po
 
   return (
     <motion.div
+      onClick={() => router.push("/login")}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
       style={{
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className={`relative h-max w-full max-w-[340px] xl:max-w-none xl:w-[260px] 2xl:w-[280px] transition-all duration-300 rounded-[2rem] z-10 pointer-events-auto
-        ${popular ? "md:scale-105 z-20" : ""}
+      className={`relative min-h-[460px] lg:min-h-[500px] w-full max-w-[340px] xl:max-w-none xl:w-[260px] 2xl:w-[280px] rounded-[2rem] z-10 pointer-events-auto cursor-pointer group flex flex-col
+        ${popular ? "md:scale-[1.05] z-20" : ""}
       `}
     >
       {/* Animated Glowing Aura Behind Popular Card */}
@@ -98,7 +103,7 @@ function TiltCard({ children, popular = false }: { children: React.ReactNode, po
       {/* Floating Content Layer (Pops out via translateZ without overflow-hidden blocking it) */}
       <div 
         style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
-        className="relative flex flex-col h-full p-5 lg:p-6 z-10 text-white"
+        className="absolute inset-0 flex flex-col p-5 lg:p-6 z-10 text-white"
       >
         {children}
       </div>
@@ -207,10 +212,10 @@ export default function PricingPage() {
         </div>
 
         {/* Floating Cards Wrapper - Moved inwards, compacted paddings */}
-        <div className="absolute inset-0 z-20 pointer-events-none [perspective:2000px] max-w-[1400px] mx-auto">
+        <div className="absolute inset-0 z-20 pointer-events-none [perspective:2000px] w-full max-w-[1400px] 2xl:max-w-[1600px] mx-auto">
           
           {/* Top Left: Explorer */}
-          <div className="absolute top-[14vh] left-[4vw] 2xl:left-[6vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-top-left scale-90 2xl:scale-100">
+          <div className="absolute top-[14%] left-[2%] 2xl:left-[4%] pointer-events-auto hover:z-50 z-10 origin-top-left xl:scale-90 2xl:scale-100">
              <TiltCard>
               <div className="flex justify-between items-start mb-3">
                  <h3 className="text-lg font-bold flex items-center gap-2">Explorer</h3>
@@ -241,7 +246,7 @@ export default function PricingPage() {
           </div>
 
           {/* Bottom Left: Starter */}
-          <div className="absolute bottom-[8vh] left-[12vw] 2xl:left-[16vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-bottom-left scale-90 2xl:scale-100">
+          <div className="absolute bottom-[8%] left-[10%] 2xl:left-[14%] pointer-events-auto hover:z-50 z-10 origin-bottom-left xl:scale-90 2xl:scale-100">
             <TiltCard>
               <div className="mb-3">
                  <h3 className="text-lg font-bold flex items-center gap-2">Starter</h3>
@@ -267,7 +272,7 @@ export default function PricingPage() {
           </div>
 
           {/* Top Right: Creator (Popular) */}
-          <div className="absolute top-[12vh] right-[10vw] 2xl:right-[14vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-20 origin-top-right scale-90 2xl:scale-100">
+          <div className="absolute top-[12%] right-[8%] 2xl:right-[12%] pointer-events-auto hover:z-50 z-20 origin-top-right xl:scale-90 2xl:scale-100">
             <TiltCard popular>
               <div className="flex flex-col items-start gap-1.5 mb-2">
                 <div className="bg-white/20 text-white backdrop-blur-md border border-white/40 px-2 py-0.5 rounded-full text-[8px] font-black tracking-widest shadow-xl uppercase">
@@ -299,7 +304,7 @@ export default function PricingPage() {
           </div>
 
           {/* Bottom Right: Pro */}
-          <div className="absolute bottom-[6vh] right-[4vw] 2xl:right-[8vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-bottom-right scale-90 2xl:scale-100">
+          <div className="absolute bottom-[6%] right-[2%] 2xl:right-[4%] pointer-events-auto hover:z-50 z-10 origin-bottom-right xl:scale-90 2xl:scale-100">
             <TiltCard>
               <div className="flex flex-col items-start gap-1.5 mb-3">
                  <div className="bg-zinc-800 border border-white/20 text-zinc-300 px-2 py-0.5 rounded-full text-[8px] font-black tracking-widest uppercase shadow-sm">
