@@ -8,9 +8,10 @@ const footerLinks = {
     { href: "/pricing", label: "Pricing" },
   ],
   company: [
-    { href: "/about", label: "About" },
-    { href: "/faq", label: "FAQ" },
-    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About Us" },
+    { href: "/contact", label: "Enterprise & Contact" },
+    { href: "/affiliates", label: "Partner Program" },
+    { href: "/resources", label: "Blog & Resources" },
   ],
   legal: [
     { href: "/privacy", label: "Privacy Policy" },

@@ -53,7 +53,7 @@ export function ExamplesGallery() {
         {examples.map((example) => (
           <div 
             key={example.id} 
-            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-6 md:p-8 hover:bg-black/60 transition-colors backdrop-blur-md"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-zinc-200 bg-white p-6 md:p-8 hover:shadow-lg transition-all shadow-sm"
           >
             {/* Video Placeholder / Image */}
             <div 
@@ -78,16 +78,16 @@ export function ExamplesGallery() {
             {/* Content */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs md:text-sm font-semibold text-orange-400 tracking-wider uppercase">
+                <span className="text-xs md:text-sm font-semibold text-orange-600 tracking-wider uppercase">
                   {example.category}
                 </span>
-                <div className="flex items-center gap-2 text-xs md:text-sm font-medium bg-white/5 px-2 py-1 md:px-3 rounded-full border border-white/10">
+                <div className="flex items-center gap-2 text-xs md:text-sm font-medium bg-zinc-50 px-2 py-1 md:px-3 rounded-full border border-zinc-200 text-zinc-700">
                   {example.icon}
-                  <span className="text-zinc-300">{example.metrics}</span>
+                  <span>{example.metrics}</span>
                 </div>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{example.title}</h3>
-              <p className="text-sm md:text-base text-zinc-300 leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-bold text-zinc-900 mb-3">{example.title}</h3>
+              <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
                 {example.description}
               </p>
             </div>
@@ -103,11 +103,11 @@ export function ExamplesGallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setZoomedImg(null)}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 md:p-12 cursor-zoom-out"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 backdrop-blur-md p-2 md:p-12 cursor-zoom-out"
           >
-            <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-7xl aspect-[9/16] md:aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+            <div onClick={(e) => e.stopPropagation()} className="relative w-full max-w-7xl aspect-[9/16] md:aspect-video rounded-xl overflow-hidden border border-zinc-200 shadow-2xl">
               <button 
-                className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/10 backdrop-blur-sm transition-colors"
+                className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-2 rounded-full bg-white/80 hover:bg-white text-zinc-900 border border-zinc-200 backdrop-blur-sm transition-colors shadow-sm"
                 onClick={() => setZoomedImg(null)}
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />

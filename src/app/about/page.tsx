@@ -1,72 +1,62 @@
-import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = {
-  title: "About Us | Velocine Studio",
-  description: "Learn about the team behind Velocine, the premium AI co-pilot for fast, high-quality video editing.",
-  openGraph: {
-    title: "About Us | Velocine Studio",
-    description: "Learn about the team behind Velocine, the premium AI co-pilot for video editing.",
-  }
+export const metadata = {
+  title: "About Us | Velocine",
+  description: "Learn about the mission and team behind Velocine Studio.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col w-full min-h-screen pt-24 pb-20 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/10 via-background to-background pointer-events-none" />
-      
-      <div className="container relative z-10 px-4 md:px-6 max-w-5xl mx-auto space-y-24">
-        
-        {/* Hero Section */}
-        <section className="text-center space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-            We are building the <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-600">future</span> of editing.
+    <div className="flex flex-col w-full min-h-screen pt-20 bg-white">
+      {/* Hero Section */}
+      <section className="w-full py-20 lg:py-32 bg-white relative overflow-hidden border-b border-zinc-200/50">
+        <div className="container px-4 md:px-6 relative z-10 text-center max-w-3xl mx-auto space-y-6">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900">
+            Decoupling Time from <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-600">Growth</span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Content creation shouldn't mean being chained to a timeline. We started Velocine to decouple a creator's time from their growth.
+          <p className="text-xl text-zinc-600">
+            We are building an engine that turns your deepest expertise into an endless stream of viral surface area.
           </p>
-        </section>
+        </div>
+      </section>
 
-        {/* Story Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Our Mission</h2>
-            <p className="text-lg text-zinc-400 leading-relaxed">
-              We believe the best creators spend their time ideating and recording, not cutting out silences and finding b-roll. 
-              Our mission is to build the ultimate AI co-pilot that acts as a world-class editor in your pocket. 
-            </p>
-            <p className="text-lg text-zinc-400 leading-relaxed">
-              Whether you are a podcaster, a streamer, or a daily vlogger, Velocine understands pacing, retention, and 
-              storytelling to deliver clips that actually perform on modern platforms.
-            </p>
+      {/* The Mission */}
+      <section className="w-full py-24 bg-zinc-50 border-b border-zinc-200/50">
+        <div className="container px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-zinc-900">The Modern Creator Problem</h2>
+              <p className="text-lg text-zinc-600 leading-relaxed">
+                Expertise takes focus. But modern social platforms demand volume. 
+                <br/><br/>
+                Founders, educators, and creators are spending hours clipping podcasts, adding hook captions, and trying to appease algorithms. This is entirely backwards. You should be spending time originating powerful ideas, not searching a timeline for split points.
+                <br/><br/>
+                Velocine was built to bridge this gap. You feed it your deep, hour-long intellectual output. It automatically detects the hooks, applies premium brand mechanics, and generates 20 ready-to-publish assets.
+              </p>
+            </div>
+            {/* Asset 6 Slot */}
+            <div className="aspect-[4/3] bg-white rounded-2xl border border-zinc-200 shadow-sm flex items-center justify-center p-8 overflow-hidden relative">
+               <div className="text-center space-y-4">
+                  <div className="text-zinc-400 font-medium">[Founder / Team Photo Placeholder]</div>
+                  <div className="text-sm text-zinc-500 max-w-xs mx-auto">This space is reserved for Asset 6. A high-quality photo of the team working or a professional founder headshot.</div>
+               </div>
+            </div>
           </div>
-          <div className="aspect-square rounded-3xl bg-gradient-to-br from-zinc-800 to-zinc-950 border border-white/10 shadow-2xl flex items-center justify-center p-8 relative overflow-hidden">
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.15),_transparent_70%)] mix-blend-screen" />
-             <div className="text-center space-y-4 relative z-10">
-                <div className="w-24 h-24 bg-orange-500/20 rounded-full mx-auto flex items-center justify-center border border-orange-500/30">
-                   <svg className="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                </div>
-                <h3 className="text-2xl font-bold text-white">Velocine Inc.</h3>
-                <p className="text-zinc-400 font-mono text-sm">[INSERT BUSINESS ADDRESS]<br/>[INSERT KVK NUMBER]</p>
-             </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <section className="bg-black/40 backdrop-blur-xl border border-white/5 rounded-3xl p-12 text-center space-y-8 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-          <h2 className="text-3xl font-bold">Join the movement</h2>
-          <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Ready to stop editing and start scaling? Join thousands of creators who have already made the switch to AI-powered workflows.
-          </p>
+      {/* CTA */}
+      <section className="w-full py-24 bg-white text-center">
+        <div className="container px-4 md:px-6 max-w-2xl mx-auto space-y-8">
+          <h2 className="text-3xl font-bold text-zinc-900">Join the movement.</h2>
           <Link href="https://studio.velocine.app/login">
-            <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 text-white shadow-[0_0_30px_rgba(249,115,22,0.4)]">
-              Get Started for Free
+            <Button size="lg" className="h-14 px-10 text-lg font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all rounded-full hover:scale-105 active:scale-95">
+              Start Creating
             </Button>
           </Link>
-        </section>
-
-      </div>
+        </div>
+      </section>
     </div>
   );
 }
