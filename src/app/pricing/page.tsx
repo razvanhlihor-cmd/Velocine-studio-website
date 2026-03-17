@@ -83,28 +83,28 @@ function TiltCard({ children, popular = false, dark = false }: { children: React
         <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 rounded-[2.5rem] blur-xl opacity-60 animate-[pulse_3s_ease-in-out_infinite]" />
       )}
       
-      {/* Core Card Background */}
+      {/* Background Layer with Overflow Hidden for the shine */}
       <div 
-        className={`relative h-full w-full rounded-[2rem] p-8 flex flex-col border overflow-hidden
+        className={`absolute inset-0 rounded-[2rem] border overflow-hidden
           ${popular 
-            ? "bg-gradient-to-b from-orange-400 via-rose-500 to-purple-600 border-none text-white" 
+            ? "bg-gradient-to-b from-orange-400 via-rose-500 to-purple-600 border-none" 
             : dark 
-              ? "bg-zinc-950 border-zinc-800 text-white"
-              : "bg-white border-zinc-200 text-zinc-900"}
+              ? "bg-zinc-950 border-zinc-800"
+              : "bg-white border-zinc-200"}
         `}
       >
         {/* Subtle internal shine for dark/popular cards */}
         {(popular || dark) && (
            <div className="absolute top-0 right-0 w-full h-[50%] bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
         )}
+      </div>
 
-        {/* Floating Content Layer (Pops out via translateZ) */}
-        <div 
-          style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
-          className="flex flex-col h-full relative z-10"
-        >
-          {children}
-        </div>
+      {/* Floating Content Layer (Pops out via translateZ without overflow-hidden blocking it) */}
+      <div 
+        style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
+        className={`relative flex flex-col h-full p-8 z-10 ${popular || dark ? "text-white" : "text-zinc-900"}`}
+      >
+        {children}
       </div>
     </motion.div>
   );
@@ -149,7 +149,7 @@ function SplineSceneHero() {
           }>
             <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading 3D Engine...</div>}>
               <Spline 
-                scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="w-full h-full object-cover"
               />
             </Suspense>
@@ -186,7 +186,7 @@ export default function PricingPage() {
 
       {/* Plan Cards */}
       <section className="w-full relative z-20">
-        <div className="container px-4 perspective-1000">
+        <div className="container px-4 [perspective:1400px]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8 max-w-[1400px] mx-auto items-center">
             
             {/* Explorer Plan */}
