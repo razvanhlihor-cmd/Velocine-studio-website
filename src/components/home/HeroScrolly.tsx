@@ -16,11 +16,21 @@ export function HeroScrolly() {
   };
 
   return (
-    <section className="relative w-full h-[calc(100svh-64px)] min-h-[600px] flex items-center justify-center overflow-hidden bg-zinc-950">
-      {/* Cinematic Background Video */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        {/* Dark overlay for text contrast */}
-        <div className="absolute inset-0 bg-zinc-950/60 z-10" />
+    <section className="relative w-full min-h-[calc(100svh-64px)] bg-zinc-950 flex flex-col md:block overflow-hidden">
+      
+      {/* 
+        Video Container:
+        Mobile: Stacked on top, 9:16 aspect ratio (tall), relative positioning.
+        Desktop: Full bleed background, absolute positioning.
+      */}
+      <div className="relative w-full aspect-[9/16] max-h-[60vh] md:max-h-none md:aspect-auto md:absolute md:inset-0 md:h-full z-0 overflow-hidden shrink-0">
+        
+        {/* Dark overlay for text contrast (Only needed on desktop where text overlaps) */}
+        <div className="hidden md:block absolute inset-0 bg-zinc-950/60 z-10 pointer-events-none" />
+        
+        {/* Soft bottom fade for mobile to blend into the text section below */}
+        <div className="md:hidden absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
+
         <video 
           ref={videoRef}
           autoPlay 
@@ -31,10 +41,19 @@ export function HeroScrolly() {
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
+
+        {/* Mute Toggle (Positioned within video container so it makes sense in both layouts) */}
+        <button 
+          onClick={toggleMute}
+          className="absolute bottom-4 right-4 md:bottom-12 md:right-12 z-30 p-3 md:p-4 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white transition-all shadow-xl"
+          aria-label="Toggle mute"
+        >
+          {isMuted ? <VolumeX className="w-4 h-4 md:w-6 md:h-6" /> : <Volume2 className="w-4 h-4 md:w-6 md:h-6" />}
+        </button>
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-20 flex flex-col items-center justify-center text-center px-4 md:px-8">
+      {/* Hero Content Container */}
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-center text-center px-4 py-12 md:py-0 md:h-[calc(100svh-64px)] md:px-8 bg-zinc-950 md:bg-transparent">
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,23 +67,14 @@ export function HeroScrolly() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1 }}
-          className="mt-6 md:mt-8 text-xl md:text-3xl text-zinc-300 font-medium max-w-2xl"
+          className="mt-6 md:mt-8 text-xl md:text-3xl text-zinc-300 font-medium max-w-2xl px-4 md:px-0"
         >
           Stop cutting. Start generating.
         </motion.p>
       </div>
 
-      {/* Mute Toggle */}
-      <button 
-        onClick={toggleMute}
-        className="absolute bottom-12 right-6 md:right-12 z-30 p-4 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 text-white transition-all shadow-xl"
-        aria-label="Toggle mute"
-      >
-        {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
-      </button>
-
-      {/* Bottom Gradient Fade to White UI */}
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-50 to-transparent z-10" />
+      {/* Bottom Gradient Fade to White UI (Desktop only, mobile flows differently) */}
+      <div className="hidden md:block absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-50 to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
