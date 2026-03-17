@@ -93,7 +93,7 @@ export function HeroScrolly() {
         Hero Content Container 
         Explicitly sits below the video in normal document flow. No overlapping absolute positioning.
       */}
-      <div className="relative z-20 w-full flex flex-col items-center justify-center text-center px-4 pt-12 pb-24 md:py-24 bg-zinc-950">
+      <div className="relative z-20 w-full flex-1 flex flex-col items-center justify-center text-center px-4 pt-12 pb-24 bg-zinc-950">
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
