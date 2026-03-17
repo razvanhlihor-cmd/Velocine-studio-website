@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, ChevronDown } from "lucide-react";
 
 export function HeroScrolly() {
   const [isMuted, setIsMuted] = useState(true);
@@ -23,13 +23,13 @@ export function HeroScrolly() {
         Mobile: Stacked on top, 9:16 aspect ratio (tall), relative positioning.
         Desktop: Full bleed background, absolute positioning.
       */}
-      <div className="relative w-full aspect-[9/16] max-h-[60vh] md:max-h-none md:aspect-auto md:absolute md:inset-0 md:h-full z-0 overflow-hidden shrink-0">
+      <div className="relative w-full aspect-[9/16] max-h-[50vh] md:max-h-none md:aspect-auto md:absolute md:inset-0 md:h-full z-0 overflow-hidden shrink-0">
         
         {/* Dark overlay for text contrast (Only needed on desktop where text overlaps) */}
         <div className="hidden md:block absolute inset-0 bg-zinc-950/60 z-10 pointer-events-none" />
         
         {/* Soft bottom fade for mobile to blend into the text section below */}
-        <div className="md:hidden absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
+        <div className="md:hidden absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
 
         <video 
           ref={videoRef}
@@ -37,7 +37,7 @@ export function HeroScrolly() {
           muted={isMuted}
           loop 
           playsInline
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover md:object-center object-top"
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
@@ -53,12 +53,12 @@ export function HeroScrolly() {
       </div>
 
       {/* Hero Content Container */}
-      <div className="relative z-20 flex-1 flex flex-col items-center justify-center text-center px-4 py-12 md:py-0 md:h-[calc(100svh-64px)] md:px-8 bg-zinc-950 md:bg-transparent">
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-start md:justify-center text-center px-4 pt-4 pb-12 md:py-0 md:h-[calc(100svh-64px)] md:px-8 bg-zinc-950 md:bg-transparent">
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-6xl md:text-8xl lg:text-[10rem] font-extrabold tracking-tighter text-white leading-[0.9]"
+          className="text-6xl md:text-8xl lg:text-[10rem] font-extrabold tracking-tighter text-white leading-[0.9] -mt-4 md:mt-0"
         >
           The timeline <br />
           <span className="text-orange-500">is dead.</span>
@@ -71,6 +71,17 @@ export function HeroScrolly() {
         >
           Stop cutting. Start generating.
         </motion.p>
+
+        {/* Scroll Indicator */}
+        <motion.div
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1, y: [0, 10, 0] }}
+           transition={{ delay: 1, duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+           className="mt-12 md:absolute md:bottom-12 flex flex-col items-center text-amber-500 pointer-events-none"
+        >
+           <span className="text-[10px] font-bold tracking-[0.2em] uppercase mb-2 opacity-80">Scroll</span>
+           <ChevronDown className="w-6 h-6 md:w-8 md:h-8" />
+        </motion.div>
       </div>
 
       {/* Bottom Gradient Fade to White UI (Desktop only, mobile flows differently) */}
