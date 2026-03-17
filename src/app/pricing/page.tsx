@@ -4,7 +4,27 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import React, { Suspense, Component } from "react";
+
+// Robust Error Boundary to catch 403s or bad data from Spline
+class SplineErrorBoundary extends Component<{children: React.ReactNode, fallback: React.ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: React.ReactNode, fallback: React.ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error) {
+    console.warn("Spline loading error (likely 403 CORS or invalid URL):", error);
+  }
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 // Dynamically import Spline to prevent SSR hydration errors
 const Spline = dynamic(() => import('@splinetool/react-spline'), { 
@@ -117,13 +137,23 @@ function SplineSceneHero() {
         </div>
 
         {/* Right content - The Spline Scene */}
-        <div className="flex-1 relative min-h-[400px] bg-black/50">
-          <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading 3D Engine...</div>}>
-            <Spline 
-              scene="https://prod.spline.design/kZDDjO6HUC96JUM2/scene.splinecode"
-              className="w-full h-full object-cover"
-            />
-          </Suspense>
+        <div className="flex-1 relative min-h-[400px] bg-black/50 overflow-hidden flex items-center justify-center">
+          <SplineErrorBoundary fallback={
+            <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 bg-zinc-900 border border-white/5 rounded-3xl">
+              <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center mb-4">
+                 <div className="w-8 h-8 rounded-full bg-orange-500 animate-pulse" />
+              </div>
+              <p className="text-white font-medium">3D Engine Preview</p>
+              <p className="text-zinc-500 text-sm mt-2">Active render engine running in background.</p>
+            </div>
+          }>
+            <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading 3D Engine...</div>}>
+              <Spline 
+                scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+                className="w-full h-full object-cover"
+              />
+            </Suspense>
+          </SplineErrorBoundary>
         </div>
       </div>
     </div>
