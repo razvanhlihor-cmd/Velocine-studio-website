@@ -74,7 +74,7 @@ function TiltCard({ children, popular = false }: { children: React.ReactNode, po
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className={`relative h-[500px] w-[340px] transition-shadow duration-300 rounded-[2rem] z-10 pointer-events-auto
+      className={`relative min-h-[400px] xl:min-h-[440px] h-max w-full max-w-[340px] xl:max-w-none xl:w-[300px] 2xl:w-[320px] transition-all duration-300 rounded-[2rem] z-10 pointer-events-auto
         ${popular ? "md:scale-105 z-20" : ""}
       `}
     >
@@ -117,7 +117,7 @@ export default function PricingPage() {
       */}
       <div className="xl:hidden flex flex-col w-full">
         {/* Mobile Bot */}
-        <div className="relative w-full h-[70svh] bg-black shrink-0 border-b border-white/10 overflow-hidden">
+        <div className="relative w-full min-h-[450px] h-[55svh] max-h-[600px] bg-black shrink-0 border-b border-white/10 overflow-hidden">
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
           
           <SplineErrorBoundary fallback={
@@ -174,37 +174,39 @@ export default function PricingPage() {
         <div className="absolute inset-y-0 right-0 w-64 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
         {/* Center Title */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
             <span className="text-orange-500 font-bold tracking-widest uppercase text-[10px] mb-2 block">The Engine</span>
-            <h1 className="text-5xl font-black tracking-tighter text-white drop-shadow-2xl">
+            <h1 className="text-4xl 2xl:text-5xl font-black tracking-tighter text-white drop-shadow-2xl">
               Pricing for <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">creators</span>.
             </h1>
         </div>
 
-        {/* Central 3D Scene */}
-        <div className="absolute inset-0 z-0">
-          <SplineErrorBoundary fallback={
-            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-zinc-950">
-              <div className="w-24 h-24 rounded-full bg-orange-500/20 flex items-center justify-center mb-6">
-                 <div className="w-12 h-12 rounded-full bg-orange-500 animate-pulse" />
+        {/* Central 3D Scene - Constrained width so robot legs stay visible */}
+        <div className="absolute inset-0 z-0 mx-auto max-w-[1300px] flex items-center justify-center pointer-events-none">
+          <div className="w-full h-[120%] lg:h-[105%] pointer-events-auto relative mt-16 2xl:mt-32">
+            <SplineErrorBoundary fallback={
+              <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-zinc-950">
+                <div className="w-24 h-24 rounded-full bg-orange-500/20 flex items-center justify-center mb-6">
+                   <div className="w-12 h-12 rounded-full bg-orange-500 animate-pulse" />
+                </div>
+                <p className="text-white text-2xl font-bold tracking-tight">Interactive Engine</p>
               </div>
-              <p className="text-white text-2xl font-bold tracking-tight">Interactive Engine</p>
-            </div>
-          }>
-            <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium tracking-widest uppercase text-sm">Initializing Neural Engine...</div>}>
-              <Spline 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
-              />
-            </Suspense>
-          </SplineErrorBoundary>
+            }>
+              <Suspense fallback={<div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium tracking-widest uppercase text-sm">Initializing Neural Engine...</div>}>
+                <Spline 
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
+                />
+              </Suspense>
+            </SplineErrorBoundary>
+          </div>
         </div>
 
-        {/* Floating Cards Wrapper (Pointer Events None to allow dragging robot between them) */}
-        <div className="absolute inset-0 z-20 pointer-events-none [perspective:2000px] max-w-[1600px] mx-auto">
+        {/* Floating Cards Wrapper */}
+        <div className="absolute inset-0 z-20 pointer-events-none [perspective:2000px] max-w-[1500px] mx-auto">
           
           {/* Top Left: Explorer */}
-          <div className="absolute top-32 left-8 lg:left-16 pointer-events-auto">
+          <div className="absolute top-[12vh] left-[2vw] 2xl:left-[4vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-top-left scale-90 2xl:scale-100">
              <TiltCard>
               <div className="flex justify-between items-start mb-4">
                  <h3 className="text-xl font-bold flex items-center gap-2">Explorer</h3>
@@ -227,7 +229,7 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> 15-20s max output length</li>
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> Velocine watermark</li>
               </ul>
-              <div className="mt-auto">
+              <div className="mt-8">
                 <Link href="/login">
                   <Button className="w-full h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold backdrop-blur-md">Your plan</Button>
                 </Link>
@@ -236,15 +238,13 @@ export default function PricingPage() {
           </div>
 
           {/* Bottom Left: Starter */}
-          <div className="absolute bottom-12 left-24 lg:left-32 pointer-events-auto">
+          <div className="absolute bottom-[6vh] left-[10vw] 2xl:left-[14vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-bottom-left scale-90 2xl:scale-100">
             <TiltCard>
               <div className="mb-4">
                  <h3 className="text-xl font-bold flex items-center gap-2">Starter</h3>
               </div>
               <div className="text-4xl font-black mb-1">€24<span className="text-sm text-zinc-400 font-normal"> /mo</span></div>
               <p className="text-zinc-500 text-xs mb-4">150 / mo</p>
-              
-              <div className="mb-[48px]" /> {/* Spacer to match Explorer badge */}
 
               <div className="text-xs font-bold mb-4 text-zinc-300">
                 2 variants <span className="text-zinc-600 mx-2">|</span> max 60s
@@ -256,7 +256,7 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> Up to 60s output</li>
                 <li className="flex gap-2 items-start"><span className="text-white">✓</span> No watermark</li>
               </ul>
-              <div className="mt-auto">
+              <div className="mt-4">
                 <Link href="/login">
                   <Button className="w-full h-12 rounded-xl bg-white text-black hover:bg-zinc-200 font-bold">Upgrade to Starter ↗</Button>
                 </Link>
@@ -265,7 +265,7 @@ export default function PricingPage() {
           </div>
 
           {/* Top Right: Creator (Popular) */}
-          <div className="absolute top-24 right-20 lg:right-32 pointer-events-auto">
+          <div className="absolute top-[10vh] right-[8vw] 2xl:right-[12vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-20 origin-top-right scale-90 2xl:scale-100">
             <TiltCard popular>
               <div className="flex flex-col items-start gap-2 mb-3">
                 <div className="bg-white/20 text-white backdrop-blur-md border border-white/40 px-3 py-1 rounded-full text-[9px] font-black tracking-widest shadow-xl uppercase">
@@ -288,9 +288,9 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-white drop-shadow-md">✓</span> 4K Ultra HD export</li>
                 <li className="flex gap-2 items-start"><span className="text-white drop-shadow-md">✓</span> Brand kit included</li>
               </ul>
-              <div className="mt-auto">
+              <div className="mt-4">
                 <Link href="/login">
-                  <Button className="w-full h-12 bg-white hover:bg-zinc-100 text-orange-600 font-extrabold rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.4)] border-0 hover:scale-[1.02]">
+                  <Button className="w-full h-12 bg-white hover:bg-zinc-100 text-orange-600 font-extrabold rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.4)] border-0">
                     Upgrade to Creator ↗
                   </Button>
                 </Link>
@@ -299,7 +299,7 @@ export default function PricingPage() {
           </div>
 
           {/* Bottom Right: Pro */}
-          <div className="absolute bottom-8 right-8 lg:right-16 pointer-events-auto">
+          <div className="absolute bottom-[4vh] right-[2vw] 2xl:right-[6vw] pointer-events-auto transition-all duration-300 hover:z-50 hover:scale-[1.05] z-10 origin-bottom-right scale-90 2xl:scale-100">
             <TiltCard>
               <div className="flex flex-col items-start gap-2 mb-4">
                  <div className="bg-zinc-800 border border-white/20 text-zinc-300 px-2 py-1 rounded-full text-[9px] font-black tracking-widest uppercase shadow-sm">
@@ -320,7 +320,7 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-purple-400 font-bold">✓</span> Unlimited output length</li>
                 <li className="flex gap-2 items-start"><span className="text-purple-400 font-bold">✓</span> API access & webhooks</li>
               </ul>
-              <div className="mt-auto">
+              <div className="mt-4">
                 <Link href="/login">
                   <Button className="w-full h-12 bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white font-bold rounded-xl transition-all">Upgrade to Pro ↗</Button>
                 </Link>
@@ -331,7 +331,7 @@ export default function PricingPage() {
         </div>
 
         {/* Interaction Prompt Bottom Center */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 flex items-center gap-2 text-sm text-zinc-200 pointer-events-none fade-out shadow-2xl">
+        <div className="absolute bottom-[6vh] left-1/2 -translate-x-1/2 z-30 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 flex items-center gap-2 text-sm text-zinc-200 pointer-events-none fade-out shadow-2xl scale-90 2xl:scale-100">
            <MousePointer2 className="w-4 h-4 text-orange-400 animate-bounce" /> Click & Drag to inspect
         </div>
 
@@ -380,8 +380,6 @@ function MobileCards() {
         </div>
         <div className="text-4xl font-black mb-1">€24<span className="text-lg text-zinc-400 font-normal"> /mo</span></div>
         <p className="text-zinc-500 text-sm mb-6">150 / mo</p>
-        
-        <div className="mb-[68px]" /> {/* Spacer */}
 
         <div className="text-sm font-bold mb-6 text-zinc-300">
           2 variants <span className="text-zinc-600 mx-2">|</span> max 60s
@@ -436,8 +434,6 @@ function MobileCards() {
         </div>
         <div className="text-4xl font-black mb-1">€149<span className="text-lg text-zinc-500 font-normal"> /mo</span></div>
         <p className="text-zinc-400 text-sm mb-6">1300 / mo</p>
-        
-        <div className="mb-[68px]" /> {/* Spacer */}
 
         <div className="text-sm font-bold mb-6 text-zinc-300">
           5 variants <span className="text-zinc-700 mx-2">|</span> max Unlimited
