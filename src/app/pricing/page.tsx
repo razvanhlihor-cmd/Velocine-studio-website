@@ -117,8 +117,8 @@ export default function PricingPage() {
       */}
       <div className="xl:hidden flex flex-col w-full">
         {/* Mobile Bot */}
-        <div className="relative w-full h-[45svh] min-h-[300px] max-h-[450px] bg-black shrink-0 border-b border-white/10 overflow-hidden">
-          <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
+        <div className="relative w-full h-[50svh] min-h-[400px] max-h-[500px] bg-black shrink-0 border-b border-white/10 overflow-hidden">
+          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
           
           <SplineErrorBoundary fallback={
             <div className="w-full h-full flex flex-col items-center justify-center p-8">
@@ -136,25 +136,31 @@ export default function PricingPage() {
             </Suspense>
           </SplineErrorBoundary>
 
-          {/* Mobile Text & Prompts */}
+          {/* Subtle Mobile Drag Prompt (Top Right instead of covering the robot) */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
-            className="absolute bottom-6 inset-x-0 z-20 flex flex-col items-center justify-end px-4 text-center pointer-events-none"
+            className="absolute top-6 right-4 z-20 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-zinc-300 pointer-events-auto shadow-xl"
           >
-            <h1 className="text-3xl font-extrabold tracking-tight text-white leading-[1] mb-3 drop-shadow-lg">
-              Clear pricing for <br/> <span className="text-orange-500">creators</span> who scale.
-            </h1>
-            <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-200 mt-2 pointer-events-auto">
-              <MousePointer2 className="w-3 h-3 text-orange-400 animate-pulse" /> Drag to look around
-            </div>
+            <MousePointer2 className="w-3 h-3 text-orange-400 animate-pulse" /> Inspect
           </motion.div>
         </div>
 
-        {/* Mobile Pricing Cards */}
-        <div className="w-full px-4 py-8 flex flex-col items-center gap-6 bg-zinc-950 relative z-30 [perspective:1200px]">
-           <MobileCards />
+        {/* Mobile Pricing Section Stack */}
+        <div className="w-full px-4 py-12 flex flex-col items-center bg-zinc-950 relative z-30">
+           {/* Mobile Title properly stacked above cards */}
+           <div className="text-center mb-10 max-w-sm mx-auto">
+             <span className="text-orange-500 font-bold tracking-widest uppercase text-[9px] mb-2 block">The Engine</span>
+             <h1 className="text-4xl font-black tracking-tighter text-white drop-shadow-lg mb-4">
+               Pricing for <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">creators</span>.
+             </h1>
+             <p className="text-zinc-400 text-sm font-medium">Clear pricing that scales with your ambitions.</p>
+           </div>
+
+           <div className="flex flex-col gap-8 w-full items-center [perspective:1200px]">
+             <MobileCards />
+           </div>
         </div>
       </div>
 
@@ -179,9 +185,9 @@ export default function PricingPage() {
             </h1>
         </div>
 
-        {/* Central 3D Scene - More constrained so we don't clip legs on 1080p */}
-        <div className="absolute inset-0 z-0 mx-auto max-w-[1200px] flex items-center justify-center pointer-events-none">
-          <div className="w-full h-[110%] lg:h-[100%] pointer-events-auto relative mt-12 2xl:mt-24">
+        {/* Central 3D Scene - Full width so arms aren't cut, origin bottom so legs stay visible */}
+        <div className="absolute inset-0 z-0 w-full flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="w-full h-[120%] lg:h-[110%] 2xl:h-full lg:scale-95 2xl:scale-100 pointer-events-auto relative lg:mt-24 2xl:mt-0 origin-bottom">
             <SplineErrorBoundary fallback={
               <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-zinc-950">
                 <div className="w-24 h-24 rounded-full bg-orange-500/20 flex items-center justify-center mb-6">
