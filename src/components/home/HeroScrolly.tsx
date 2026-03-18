@@ -55,15 +55,14 @@ export function HeroScrolly() {
   }, []);
 
   return (
-    <section className="relative w-full bg-zinc-950 flex flex-col overflow-hidden">
+    <section className="relative w-full min-h-[calc(100vh-4rem)] bg-zinc-950 flex flex-col overflow-hidden">
       
       {/* 
         Video Container:
-        Always physically on top of the text now. 
-        Mobile: 9:16 aspect ratio so it fills the screen perfectly in portrait without chopping.
-        Desktop: 16:9 aspect ratio or fixed max-height to ensure a cinematic widescreen look.
+        Flex-1 allows it to take up all available vertical space perfectly regardless of screen size,
+        without pushing the text block down or pulling it up weirdly on resize.
       */}
-      <div className="relative w-full aspect-[9/16] md:aspect-[21/9] bg-black shrink-0 overflow-hidden">
+      <div className="relative w-full flex-1 min-h-0 bg-black shrink-0 overflow-hidden">
         
         {/* Soft bottom fade to blend the video smoothly into the text section below */}
         <div className="absolute bottom-0 left-0 w-full h-16 md:h-32 bg-gradient-to-t from-zinc-950 to-transparent z-10 pointer-events-none" />
@@ -91,9 +90,9 @@ export function HeroScrolly() {
 
       {/* 
         Hero Content Container 
-        Explicitly sits below the video in normal document flow. No overlapping absolute positioning.
+        Explicitly sits below the video in normal document flow. shrink-0 keeps it intact.
       */}
-      <div className="relative z-20 w-full flex-1 flex flex-col items-center justify-center text-center px-4 pt-12 pb-24 bg-zinc-950">
+      <div className="relative z-20 w-full shrink-0 flex flex-col items-center justify-center text-center px-4 pt-8 pb-16 bg-zinc-950">
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,7 +117,7 @@ export function HeroScrolly() {
            initial={{ opacity: 0 }}
            animate={{ opacity: 1, y: [0, 10, 0] }}
            transition={{ delay: 1, duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-           className="mt-16 flex flex-col items-center text-amber-500 pointer-events-none"
+           className="mt-12 flex flex-col items-center text-amber-500 pointer-events-none"
         >
            <span className="text-[10px] font-bold tracking-[0.2em] uppercase mb-2 opacity-80">Discover</span>
            <ChevronDown className="w-6 h-6 md:w-8 md:h-8" />
