@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/ui/magnetic";
 
 export const metadata = {
   title: "Examples | Velocine",
@@ -40,11 +41,13 @@ export default function ExamplesPage() {
           <p className="text-xl text-zinc-600 mb-10">
             Join the creators who are decoupling their time from their growth.
           </p>
-          <Link href="https://studio.velocine.app/login">
-            <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
-              Try Velocine for Free
-            </Button>
-          </Link>
+          <Magnetic intensity={0.15}>
+            <Link href="https://studio.velocine.app/login">
+              <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
+                Try Velocine for Free
+              </Button>
+            </Link>
+          </Magnetic>
         </div>
       </section>
     </div>
