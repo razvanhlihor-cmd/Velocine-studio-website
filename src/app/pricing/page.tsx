@@ -237,9 +237,9 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> 1 variant per project</li>
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> 15-20s output length</li>
               </ul>
-              <div className="mt-4">
-                <Link href="/login">
-                  <Button className="w-full h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs backdrop-blur-md">Your plan</Button>
+              <div className="mt-auto">
+                <Link href="/login" className="block">
+                  <Button className="w-full h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs backdrop-blur-md cursor-pointer">Your plan</Button>
                 </Link>
               </div>
              </TiltCard>
@@ -263,9 +263,9 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-orange-500">✓</span> 1-2 variants per project</li>
                 <li className="flex gap-2 items-start"><span className="text-white">✓</span> No watermark</li>
               </ul>
-              <div className="mt-2">
-                <Link href="/login">
-                  <Button className="w-full h-9 rounded-xl bg-white text-black hover:bg-zinc-200 text-xs font-bold">Upgrade ↗</Button>
+              <div className="mt-auto">
+                <Link href="/login" className="block">
+                  <Button className="w-full h-9 rounded-xl bg-white text-black hover:bg-zinc-200 text-xs font-bold cursor-pointer">Upgrade ↗</Button>
                 </Link>
               </div>
             </TiltCard>
@@ -293,9 +293,9 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-white drop-shadow-md">✓</span> No watermark</li>
                 <li className="flex gap-2 items-start"><span className="text-white drop-shadow-md">✓</span> 4K Ultra HD export</li>
               </ul>
-              <div className="mt-2">
-                <Link href="/login">
-                  <Button className="w-full h-9 bg-white hover:bg-zinc-100 text-orange-600 font-extrabold rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.4)] border-0 text-xs text-center flex items-center justify-center">
+              <div className="mt-auto">
+                <Link href="/login" className="block">
+                  <Button className="w-full h-9 bg-white hover:bg-zinc-100 text-orange-600 font-extrabold rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.4)] border-0 text-xs text-center flex items-center justify-center cursor-pointer">
                     Get Creator ↗
                   </Button>
                 </Link>
@@ -324,9 +324,9 @@ export default function PricingPage() {
                 <li className="flex gap-2 items-start"><span className="text-purple-400 font-bold">✓</span> Unlimited output length</li>
                 <li className="flex gap-2 items-start"><span className="text-purple-400 font-bold">✓</span> API access & webhooks</li>
               </ul>
-              <div className="mt-2">
-                <Link href="/login">
-                  <Button className="w-full h-9 bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white font-bold rounded-xl transition-all text-xs">Upgrade ↗</Button>
+              <div className="mt-auto">
+                <Link href="/login" className="block">
+                  <Button className="w-full h-9 bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white font-bold rounded-xl transition-all text-xs cursor-pointer">Upgrade ↗</Button>
                 </Link>
               </div>
             </TiltCard>
