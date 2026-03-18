@@ -1,18 +1,12 @@
 "use client";
 
-import { motion, useScroll, useVelocity, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 export function ScrollyStory() {
   const targetRef = useRef<HTMLDivElement>(null);
 
-  // 1. Velocity Skew Math
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-  const skewVelocity = useTransform(smoothVelocity, [-1000, 1000], [-3, 3]);
-
-  // 2. SVG Path Drawing Math
+  // SVG Path Drawing Math
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start center", "end center"]
@@ -41,10 +35,7 @@ export function ScrollyStory() {
            </svg>
         </div>
 
-        <motion.div 
-          style={{ skewY: skewVelocity }}
-          className="container max-w-5xl px-4 md:px-6 relative z-10 flex flex-col gap-32 md:gap-48 text-center"
-        >
+        <div className="container max-w-5xl px-4 md:px-6 relative z-10 flex flex-col gap-32 md:gap-48 text-center">
             
             {/* Story 1 */}
             <motion.div 
@@ -92,7 +83,7 @@ export function ScrollyStory() {
                 </p>
             </motion.div>
 
-        </motion.div>
+        </div>
     </section>
   );
 }
