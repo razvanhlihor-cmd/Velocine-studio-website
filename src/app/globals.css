@@ -53,3 +53,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer utilities {
+  .text-fluid-5xl { font-size: clamp(2rem, 5vw, 3rem); line-height: 1; }
+  .text-fluid-6xl { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1; }
+  .text-fluid-7xl { font-size: clamp(3rem, 7vw, 5rem); line-height: 1; }
+  .text-fluid-8xl { font-size: clamp(4rem, 8vw, 6rem); line-height: 1; }
+  .text-fluid-9xl { font-size: clamp(5rem, 10vw, 8rem); line-height: 1; }
+}

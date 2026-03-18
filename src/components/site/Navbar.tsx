@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { Magnetic } from "@/components/ui/magnetic";
 
 const navLinks = [
   { href: "/product", label: "Product" },
@@ -42,16 +43,20 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-2">
-            <Link href="https://studio.velocine.app/login">
-              <Button variant="ghost" size="sm">
-                Sign in
-              </Button>
-            </Link>
-            <Link href="https://studio.velocine.app/login">
-              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                Start free
-              </Button>
-            </Link>
+            <Magnetic intensity={0.1}>
+              <Link href="https://studio.velocine.app/login">
+                <Button variant="ghost" size="sm">
+                  Sign in
+                </Button>
+              </Link>
+            </Magnetic>
+            <Magnetic intensity={0.15}>
+              <Link href="https://studio.velocine.app/login">
+                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  Start free
+                </Button>
+              </Link>
+            </Magnetic>
           </div>
           <Sheet>
             <SheetTrigger asChild>

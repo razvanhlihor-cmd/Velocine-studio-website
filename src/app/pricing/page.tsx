@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import dynamic from "next/dynamic";
-import React, { Suspense, Component } from "react";
+import React, { Suspense, Component, useState } from "react";
 import { MousePointer2, ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -43,28 +43,41 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
  */
 function TiltCard({ children, popular = false }: { children: React.ReactNode, popular?: boolean }) {
   const router = useRouter();
+  
+  // 3D Tilt Math
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
-
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  // Spotlight Track Math
+  const pixelX = useMotionValue(0);
+  const pixelY = useMotionValue(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
+    const mouseXPos = e.clientX - rect.left;
+    const mouseYPos = e.clientY - rect.top;
+    
+    // Feed 3D matrix limits
+    x.set(mouseXPos / width - 0.5);
+    y.set(mouseYPos / height - 0.5);
+    
+    // Feed Spotlight absolute pixels
+    pixelX.set(mouseXPos);
+    pixelY.set(mouseYPos);
   };
 
   const handleMouseLeave = () => {
-     x.set(0);
-     y.set(0);
+    // Reset defaults on exit
+    x.set(0);
+    y.set(0);
+    setIsHovered(false);
   };
 
   return (
@@ -72,6 +85,7 @@ function TiltCard({ children, popular = false }: { children: React.ReactNode, po
       onClick={() => router.push("/login")}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setIsHovered(true)}
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       style={{
@@ -98,6 +112,20 @@ function TiltCard({ children, popular = false }: { children: React.ReactNode, po
       >
         {/* Subtle internal shine */}
         <div className={`absolute top-0 right-0 w-full h-[50%] bg-gradient-to-b ${popular ? "from-orange-500/20" : "from-white/5"} to-transparent pointer-events-none`} />
+        
+        {/* Dynamic Tracked Spotlight Layer */}
+        <motion.div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-0"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                500px circle at ${pixelX}px ${pixelY}px,
+                ${popular ? "rgba(249, 115, 22, 0.15)" : "rgba(255, 255, 255, 0.08)"},
+                transparent 80%
+              )
+            `,
+          }}
+        />
       </div>
 
       {/* Floating Content Layer (Pops out via translateZ without overflow-hidden blocking it) */}

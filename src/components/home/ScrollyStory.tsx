@@ -1,14 +1,50 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useVelocity, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
 
 export function ScrollyStory() {
+  const targetRef = useRef<HTMLDivElement>(null);
+
+  // 1. Velocity Skew Math
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+  const skewVelocity = useTransform(smoothVelocity, [-1000, 1000], [-3, 3]);
+
+  // 2. SVG Path Drawing Math
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start center", "end center"]
+  });
+  const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
+
   return (
-    <section className="w-full bg-white py-32 md:py-48 flex flex-col items-center relative overflow-hidden">
+    <section ref={targetRef} className="w-full bg-white py-32 md:py-48 flex flex-col items-center relative overflow-hidden">
         {/* Abstract glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="container max-w-5xl px-4 md:px-6 relative z-10 flex flex-col gap-32 md:gap-48 text-center">
+        {/* Animated SVG Path connecting the stories */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-px h-[80%] z-0 hidden md:block">
+           <svg className="w-full h-full" overflow="visible">
+             <motion.line
+               x1="0"
+               y1="0"
+               x2="0"
+               y2="100%"
+               stroke="#f97316"
+               strokeWidth="2"
+               strokeDasharray="8 8"
+               style={{ pathLength }}
+               className="opacity-50"
+             />
+           </svg>
+        </div>
+
+        <motion.div 
+          style={{ skewY: skewVelocity }}
+          className="container max-w-5xl px-4 md:px-6 relative z-10 flex flex-col gap-32 md:gap-48 text-center"
+        >
             
             {/* Story 1 */}
             <motion.div 
@@ -56,7 +92,7 @@ export function ScrollyStory() {
                 </p>
             </motion.div>
 
-        </div>
+        </motion.div>
     </section>
   );
 }
